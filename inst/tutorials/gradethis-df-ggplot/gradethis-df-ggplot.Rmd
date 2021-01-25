@@ -1,0 +1,186 @@
+---
+title: "Données RSA"
+output: 
+  learnr::tutorial:
+    includes:
+      in_header: header.html
+    css: css/custom_css.css
+    progressive: true
+    language: 
+      fr:
+        button:
+          runcode: Tester le code
+          submitanswer: Envoyer 
+          startover: Réinitialiser
+          hints: Indice ?
+        text:
+          startover: Réinitialiser le tutoriel
+          areyousure: "Êtes-vous certain de vouloir recommencer ? Vos réponses actuelles seront perdues."
+runtime: shiny_prerendered
+description: "Exercices"
+---
+
+```{r setup, include = FALSE}
+library(tidyverse)
+library(learnr)
+library(gradethis)
+library(testthat)
+
+tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')
+knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5)
+rsa_url <- "https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite/20201224-095107/tbl-rsa.csv"
+rsa_df  <- read_csv(rsa_url) 
+```
+
+## Lecture d'un fichier CSV {data-progressive=T}
+
+Compléter le code suivant en plaçant dans une variable `xlsfile` le chemin vers le fichier xls dézippé.
+
+```{r ex0, message = F, exercise = TRUE, message = FALSE, exercise.lines = 7, warning = FALSE}
+# Données mensuelles sur les allocataires du RSA
+baseurl <- "https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite/"
+rsaurl  <- str_c(baseurl, "20201224-095107/tbl-rsa.csv")
+
+# Le code suivant constitue une table nommée rsa
+rsa <- read_csv(rsaurl) 
+rsa
+```
+
+## Test sur la table rsa {data-progressive=T}
+
+Compléter le code suivant en plaçant dans une variable `xlsfile` le chemin vers le fichier xls dézippé.
+
+```{r ex1, message = F, exercise = TRUE, message = FALSE, exercise.lines = 10}
+# La table "rsa" crée dans l'exercice précédent est-elle acccessible ?
+rsa
+
+# Et non, elle a disparu avec l'environnement de l'exercice précédent !
+# En revanche la table 'rsa_df' préparée dans le "setup" du tutoriel
+# est accessible pour tous les exercices ;
+# pour le vérifier, commentez la ligne 2, avec #
+# et décommentez la ligne suivante :
+#rsa_df
+```
+
+## Test d'un graphique avec grade_this_code() {data-progressive=T}
+
+Les 4 écritures ci-dessous produisent le même résultat, elles sont donc valides du point de vue de l'apprenant.
+La solution visée correspond à la 1ère écriture. grade_this_code() vérifie le dernier graphique généré. 
+
+Pour lui, la variante 1 est valide. mais grade_this_code() va considérer les variantes 2 et 3 comme différentes, et donc les rejeter comme non conformes à la solution. Activez chaque bloc d'intérêt en désactivant les autres pour le vérifier :
+
+```{r ex2, message = F, exercise = TRUE, message = FALSE, exercise.lines = 11, warning = FALSE}
+# solution visée : filtrage sur les DROM et courbes d'évolution
+#df <- rsa_df %>% filter(dep <= '06')
+#ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + 
+#      geom_line() 
+
+# variante 1 : saut de ligne et paramètres aes dans un ordre différent
+df <- rsa_df %>% 
+  filter(dep <= '06')
+ggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) + 
+      geom_line() 
+
+# variante 2 : colour est écrit color (les 2 écritures sont permises)
+#df <- rsa_df %>% filter(dep <= '06')
+#ggplot(data = df, mapping = aes(x = mois, y = rsa, color = dep)) + 
+#      geom_line() 
+
+# variante 3
+#df <- rsa_df %>% filter(dep <= '06')
+#ggplot(data = df) + 
+#      geom_line(mapping = aes(x = mois, y = rsa, color = dep)) 
+
+```
+
+```{r ex2-solution}
+df <- rsa_df %>% filter(dep <= '06')
+ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + 
+      geom_line() 
+```  
+
+```{r ex2-check}
+grade_this_code()
+```
+Note : les messages renvoyés par grade_this_code() ne sont pas - encore - traduisibles. 
+
+## Test d'un graphique avec grade_this() {data-progressive=T}
+
+Pour construire un test plus subtil, on va s'attacher aux caractéristiques externes majeures que l'on attend du graphique :
+
+* conformité de la table de données en entrée : test sur les lignes et les colonnes ;
+* conformité du graphique : bon encodage visuel (geom_line, à la rigueur geom_smooth) et choix des bonnes variables visuelles.
+
+```{r ex3, message = F, exercise = TRUE, message = FALSE, exercise.lines = 11, warning = FALSE}
+# solution visée : filtrage sur les DROM et courbes d'évolution
+#df <- rsa_df %>% filter(dep <= '06')
+#ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + 
+#      geom_line() 
+
+# variante 1 : saut de ligne et paramètres aes dans un ordre différent
+df <- rsa_df %>% 
+  filter(dep <= '06')
+ggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) + 
+      geom_line() 
+
+# variante 2 : colour est écrit color (les 2 écritures sont permises)
+#df <- rsa_df %>% filter(dep <= '06')
+#ggplot(data = df, mapping = aes(x = mois, y = rsa, color = dep)) + 
+#      geom_line() 
+
+# variante 3
+#df <- rsa_df %>% filter(dep <= '06')
+#ggplot(data = df) + 
+#      geom_line(mapping = aes(x = mois, y = rsa, color = dep)) 
+
+```
+
+```{r ex3-check}
+grade_this({
+
+  if (is.null(.result)) {
+    fail("Vous avez testé la fonction 'Soumettre', et c'est très bien ! Pour le moment, aucun code n'a pu être analysé. Veuillez saisir une 1ère instruction.")
+  }
+  
+  if ("ggplot" %in% class(.result) == FALSE) {
+    fail("Votre dernière instruction ne produit pas un graphique ggplot2")
+  }
+  g <- .result
+  
+  df <- g$data
+  if ( ! ('dep' %in% names(df) )) {
+    fail("Colonne 'dep' absente du jeu de données en entrée du graphique")
+  } 
+  
+  if (!isTRUE( all.equal( rsa_df %>% filter(dep <= '06') %>% count(dep) %>% arrange(dep),
+                          df %>% count(dep) %>% arrange(dep)))) {
+  }
+
+  t <- c(map( g$mapping, all.vars), map(g$layers[[1]]$mapping, all.vars) ) 
+
+  if (!isTRUE( all.equal( sort(unlist(t)), c( colour = "dep", x = "mois", y = "rsa") ) )) {
+    if (!('colour' %in% names(t))) {
+      fail("colour ?")
+    }
+    
+    if (length(t) < 3) {
+      fail("missing aes !")
+    }
+
+    fail("bad aes !")
+  }
+
+  # test de la représentation. geom_line est attendue, mais geom_smooth est admissible
+  classLayer1 <- class(g$layers[[1]]$geom)[1]
+  if ( classLayer1 != 'GeomLine') {
+    if (classLayer1 == 'GeomSmooth') {
+      pass(str_glue("Excellent ! Toutefois, votre graphique présente une couche de type '{classLayer1}', alors que l'on attendait simplement une 'GeomLine'") )
+    }
+    fail(str_glue("Votre graphique présente une couche de type '{classLayer1}', alors que l'on attend une 'GeomLine'") )
+  } 
+  
+  pass("Bravo ! Votre graphique présente bien les 6 courbes d'évolution attendues.")
+
+}, fail_code_feedback = TRUE)
+```
+<div data-iframe-height></div>

@@ -1,0 +1,361 @@
+---
+title: "Je code en R !"
+author: "Auteur : Éric Mauvière"
+date: "`r paste('Modifié le',format(Sys.time(), '%d %B %Y'))`"
+output: 
+  learnr::tutorial:
+    includes:
+      in_header: header.html
+    css: css/custom_css.css
+    progressive: true
+    language: 
+      fr:
+        button:
+          runcode: Tester le code
+          startover: Réinitialiser
+          hints: Indice(s) ?
+          nexttopic: "Sujet suivant »"
+          previoustopic: "« Sujet précédent"
+        text:
+          startover: Réinitialiser ce tutoriel
+          areyousure: "Êtes-vous certain de vouloir recommencer ? Vos réponses actuelles seront perdues."
+runtime: shiny_prerendered
+---
+
+```{r setup, include=FALSE}
+library(learnr)
+library(gradethis)
+library(parsons)
+library(tidyverse)
+
+knitr::opts_chunk$set(echo = FALSE)
+tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')
+```
+
+## Introduction {data-progressive=T}
+### Construction du tutoriels interactifs avec learnr (et gradethis)
+
+<p><img src="css/img/learnr_logo.png" align='right' style='display:inline-block;max-width:200px'>Ce tutoriel a un statut particulier car il s'adresse à des formateurs curieux de (mieux) comprendre comment... **construire des tutoriels interactifs avec R** et au sujet de R (voire d'autres langages).
+
+Ce **double regard, d'apprenant et d'enseignant**, est inhérent à la fabrique d'un support réussi : l'enseignant doit savoir se mettre à la place de l'apprenant. En imaginant à l'avance ses raisonnements, parfois presques justes, parfois mal engagés, il peut mettre à sa disposition d'utiles **"feedbacks"**. Ainsi, loin d'être bloqué voire vite découragé, l'apprenant appréciera de sentir une "voix" secourable le guider avec - autant que faire se peut - **bienveillance** !
+
+Pour illustrer quelques techniques offertes par **learnr** et **gradethis**, et les principes qui les animent, ce tutoriel se donne un objectif "apparent" très simple. Il vise à ce que l'apprenant, **même totalement débutant en R**, code deux instructions simples, déclaration d'un vecteur caractère et jeu sur les mots d'une phrase. Et ainsi comprenne le fonctionnement d'une fonction de concaténation, dual selon la nature des paramètres en entrée. 
+
+L'objectif secondaire, et en réalité  principal si vous êtes formateur R, est de vous faire sentir les potentialités de ces packages d'aide à l'élaboration de tutoriels. Et par la même occasion vous inviter à (re)considérer la **valeur du temps passé à fignoler les mécanismes de guidages** que vous prévoyez pour vos élèves.
+
+
+## Reconstitution d'une phrase {data-progressive=T}
+Suivez les instructions suivantes. Vous pouvez sans risque tester l'exécution de votre code, avant de cliquer sur 'Soumettre' pour correction !
+
+
+```{r tour0, exercise = TRUE, message = FALSE, exercise.lines = 10}
+# Ceci est une ligne de commentaire, elle commence par un #.
+# Vous allez placer dans une variable dénommée "mots" un vecteur 
+#   des quelques mots de la phrase "Je programme avec R !"
+# Tapez votre propre code dans la ligne suivante (ligne 5) :
+
+
+# Tapez ensuite l'instruction qui va remettre bout à bout tous ces mots 
+
+
+# Fin de l'exercice
+
+```
+
+```{r tour0-check}
+grade_this({
+
+  lobjs <- ls(envir = .envir_result)
+
+  if (is.null(.result)) {
+    fail("Vous avez testé la fonction 'Soumettre', et c'est très bien ! Pour le moment, aucun code n'a pu être analysé. Veuillez saisir une 1ère instruction.")
+  }
+  
+  if (!is.null(lobjs)) {
+    nliste1 <- lobjs[1]
+    liste1  <- .envir_result[[nliste1]]
+  } else {
+    nliste1 <- NULL
+    liste1  <- NULL
+  }
+
+  if (str_detect(tolower(.result), '__')) {
+    fail("Vous avez laissé des ___, il faut les remplacer intégralement. Vous pouvez double-cliquer dedans pour les éditer plus facilement")
+  }
+  
+  if ( !exists("mots", envir = .envir_result) && !is.null(liste1) 
+       && is_atomic(liste1)
+       && is_character(liste1)
+       && length(liste1) > 1
+       ) {
+    
+    fail(str_glue("Vous avez bien défini un vecteur de plusieurs mots, mais il s'appelle '{nliste1}' et non pas 'mots'"))
+  }
+  
+  if ( !exists("mots", envir = .envir_result) ) {
+    fail("Un indice : la variable 'mots' est absente de votre réponse")
+  }
+
+  if (str_detect(tolower(.result), 'jeprogramme')) {
+    fail("Avez-vous pensé à remettre des blancs entre chaque mot ?")
+  }
+  
+  if (str_detect(tolower(.result), 'programe') == TRUE) {
+    fail("Faut-il un m ou deux m à ce progr... ?")
+  }
+  
+  if (tolower(.result) == tolower(.solution) && .result != .solution) {
+    fail("Vous y êtes presque, vérifiez majuscules et minuscules")
+  }
+  
+  if (str_detect(tolower(.result), 'je programme avec r') == TRUE && .result != .solution) {
+    fail("Vous y êtes presque, vérifiez juste la ponctuation !")
+  }
+  
+  if (str_detect(.user_code, '=') && !str_detect(.user_code, '<-') && .result == .solution) {
+    pass("Ca marche ! Toutefois l'opérateur d'affectation dans R est <- plutôt que =")
+  }
+  
+  if (str_detect(.user_code, ';') && .result == .solution) {
+    pass("Ca marche ! Toutefois l'opérateur d'affectation que R privilége est '<-' plutôt que '='")
+  }
+  
+  if (.result == .solution) {
+    pass("Bravo ! Si ce sont vos débuts avec R, c'est fantastique !")
+  }
+
+  fail("Désolé, ce n'est pas encore tout à fait ça. Vous n'êtes certainement pas loin du but !")
+}, fail_code_feedback = TRUE)
+```
+
+```{r tour0-hint-1}
+# Voici un exemple : dans une variable nommée liste, je place un vecteur de 2 mots :
+liste <- c('bonjour', 'vous')
+```  
+
+```{r tour0-hint-2}
+# Pour assembler les éléments de ma liste, 
+# je peux utiliser la fonction paste.
+# Pour en savoir plus sur les paramètres de paste :
+?paste
+```  
+
+```{r tour0-hint-3}
+# paste peut s'utiliser de deux façons :
+# 1 - avec des mots séparés en autant d'arguments, 
+# il faudra alors spécifier sep = ' '
+paste('bonjour', 'vous', sep = ' ')
+# => 'bonjour vous'
+```  
+```{r tour0-hint-4}
+# 2 - avec un vecteur, il faudra alors spécifier collapse = ' '
+paste(c('bonjour', 'vous'), collapse = ' ')
+# => 'bonjour vous'
+paste(c('bonjour', 'vous'), collapse = ', ')
+# => 'bonjour, vous'
+``` 
+
+```{r tour0-hint-5}
+# La solution...
+# ... est à portée d'un clic ;
+# si vous n'êtes pas totalement désespéré(e), 
+# donnez-vous encore une chance de trouver seul(e) !
+``` 
+
+```{r tour0-solution}
+# La solution !
+mots <- c('Je', 'programme', 'avec', 'R', '!')
+paste(mots, collapse = ' ')
+```  
+Si au test de votre bloc, une erreur en rouge apparait ci-dessus, repérez le n° de ligne mentionné pour corriger ou effacer, et si besoin consultez les indices !
+
+Assurez-vous enfin de répondre par le bouton 'Soumettre' avant de continuer.
+
+## Quelle est la bonne fonction ? {data-progressive=T}
+
+```{r qu1, echo = FALSE}
+question("Pour assembler les éléments d'un vecteur, je peux utiliser dans R :",
+  answer("paste", correct = TRUE),
+  answer("concat", message = "'concat' fonctionne en SQL, mais n'est pas la réponse dans R"),
+  answer("join", message = "'join' fonctionne en javascript, mais n'est pas la réponse dans R"),
+  correct = "C'est ça, vous avez bien mémorisé !",
+  incorrect = "Pas tout à fait.",
+  allow_retry = TRUE,
+  #submit_button = "Envoyer",
+  random_answer_order = TRUE
+)
+```
+
+## Reconstitution d'une phrase V2 {data-progressive=T}
+
+Refaites s'il vous plaît le 1er exercice en remplissant les blancs (soulignés). Veillez à ne laisser aucun blanc souligné résiduel. Vous pouvez double-cliquer pour sélectionner tout un "blanc" à remplir. 
+
+```{r phrase2, exercise = TRUE, message = FALSE, exercise.lines = 10}
+# ceci est une ligne de commentaire, elle commence par un #
+# placez dans une variable dénommée "mots" un vecteur 
+# des quelques mots de la phrase "Je programme avec R !"
+# remplacez les ___ dans la ligne suivante (ligne 5)
+____ <- c('Je', '_________', 'avec', '_', '_')
+
+# tapez ensuite l'instruction qui va remettre bout à bout tous ces mots 
+paste(____, collapse = "_")
+
+# fin de l'exercice
+
+```
+
+```{r phrase2-check}
+grade_this({
+
+  lobjs <- ls(envir = .envir_result)
+
+  if (is.null(.result)) {
+    fail("Aucun code n'a pu être analysé. Veuillez saisir une 1ère instruction.")
+  }
+  
+  if (!is.null(lobjs)) {
+    nliste1 <- lobjs[1]
+    liste1  <- .envir_result[[nliste1]]
+  } else {
+    nliste1 <- NULL
+    liste1  <- NULL
+  }
+
+  if (str_detect(tolower(.result), '__')) {
+    fail("Vous avez laissé des ___, il faut les remplacer intégralement. Vous pouvez double-cliquer dedans pour les éditer plus facilement")
+  }
+  
+  if ( !exists("mots", envir = .envir_result) && !is.null(liste1) 
+       && is_atomic(liste1)
+       && is_character(liste1)
+       && length(liste1) > 1
+       ) {
+    
+    fail(str_glue("Vous avez bien défini un vecteur de plusieurs mots, mais il s'appelle '{nliste1}' et non pas 'mots'"))
+  }
+  
+  if ( !exists("mots", envir = .envir_result) ) {
+    fail("Un indice : la variable 'mots' est absente de votre réponse")
+  }
+
+  if (str_detect(tolower(.result), 'jeprogramme')) {
+    fail("Avez-vous pensé à remettre des blancs entre chaque mot ?")
+  }
+  
+  if (str_detect(tolower(.result), 'programe') == TRUE) {
+    fail("Faut-il un m ou deux m à ce progr... ?")
+  }
+  
+  if (tolower(.result) == tolower(.solution) && .result != .solution) {
+    fail("Vous y êtes presque, vérifiez majuscules et minuscules")
+  }
+  
+  if (str_detect(tolower(.result), 'je programme avec r') == TRUE && .result != .solution) {
+    fail("Vous y êtes presque, vérifiez juste la ponctuation !")
+  }
+  
+  if (str_detect(.user_code, '=') && !str_detect(.user_code, '<-') && .result == .solution) {
+    pass("Ca marche ! Toutefois l'opérateur d'affectation dans R est <- plutôt que =")
+  }
+  
+  if (str_detect(.user_code, ';') && .result == .solution) {
+    pass("Ca marche ! Toutefois l'opérateur d'affectation que R privilége est '<-' plutôt que '='")
+  }
+  
+  if (.result == .solution) {
+    pass("Bravo ! Si ce sont vos débuts avec R, c'est fantastique !")
+  }
+
+  fail("Désolé, ce n'est pas encore tout à fait ça. Vous n'êtes certainement pas loin du but !")
+}, fail_code_feedback = TRUE)
+```
+```{r phrase2-hint-2}
+# dans une variable nommée liste je place un vecteur de 2 mots
+liste <- c('bonjour', 'vous')
+paste()
+```  
+
+```{r phrase2-hint-1}
+# dans une variable nommée liste je place un vecteur de 2 mots
+liste <- c('bonjour', 'vous')
+```  
+
+
+```{r phrase2-solution}
+# solution de l'exercice
+mots <- c('Je', 'programme', 'avec', 'R', '!')
+paste(mots)
+```  
+
+## Retournons les cartes ! {data-progressive=T}
+
+Révisons avec ces "Flashcards" les différents usages de la fonction `paste` : selon le type de contenu qu'elle ingère, la façon de spécifier le délimiteur varie. Prenez le temps de réfléchir à la bonne réponse avant de retourner chaque carte !
+<div class="flashcard_div">
+```{r flashcard, warning = F}
+library(flashCard)
+df1 <- data.frame(
+  front = c("Rassembler","un vecteur de mots", "avec un délimiteur"),
+  back  = c("Paste et collapse", "paste(c('janvier','février','mars'), collapse = ', ')", "=> 'janvier, février, mars'")
+)
+df2 <- data.frame(
+  front = c("Accoler","plusieurs mots", "avec un délimiteur"),
+  back  = c("Paste et sep", "paste('Bonjour', 'vous ', sep = ' à ')", "=> 'Bonjour à vous'")
+
+)
+flashCard(df1, elementId = "card", front_text_color = "white")
+flashCard(df2, elementId = "card2", front_text_color = "white")
+```
+</div>
+
+`paste` appartient au cœur du langage R. Sa variante `paste0` colle toutes les chaines de caractère en entrée sans séparateur (équivalent de paste(..., collapse = '')). 
+
+Dans le contexte tidyverse/stringr, `paste` a pour équivalent `str_c`. La librairie stringr rassemble toutes les fonctions qui gèrent les chaines de caractère et les préfixe par `str_`, ce qui facilite leur mémorisation. 
+
+## Conclusion {data-progressive=T}
+Cet exercice final s'adresse au formateur considérant l'intérêt des outils exposés dans ce tutoriel.
+
+Je vous invite à classer par ordre de difficulté pédagogique (ou charge cognitive) croissante ces différentes "widgets".
+
+Un ["problème de Parson"](https://www.researchgate.net/publication/262160581_Parson%27s_programming_puzzles_A_fun_and_effective_learning_tool_for_first_programming_courses) consiste stricto sensu à proposer à l'apprenant d'ordonner des lignes de code qui lui sont présentées dans le désordre. 
+
+Je reprends cette idée en en élargissant le champ (lignes de code => concepts), pour ce dernier exercice, qui n'a donc pas de solution 'mathématique' incontestable. Mais la recherche en pédagogie permet de dégager une hiérachie 'naturelle'.
+
+Le widget ci-dessous est donc un genre de problème de Parson, appliqué à la pédagogie elle-même !
+```{r qu_parsons, echo = FALSE}
+question_parsons(
+  initial = c(
+      "Flashcards",
+      "QCU / QCM",
+      "Problèmes de Parson",
+      "Codage avec blancs à remplir",
+      "Codage libre (corrigé)"
+  ),
+  problem_type = 'base', orientation = c("horizontal"),
+  correct = "Je suis d'accord !", incorrect = "Ça se discute...",
+  loading = c("Chargement : "), submit_button = "Soumettre",
+  try_again_button = "Réessayer",
+  random_answer_order = TRUE,
+  parsons::pass_if(
+    c(
+      "Flashcards",
+      "QCU / QCM",
+      "Problèmes de Parson",
+      "Codage avec blancs à remplir",
+      "Codage libre (corrigé)"
+    )
+  ),
+  parsons::fail_if(
+    ~length(.) < 5,
+    message = "Vous devez choisir tous les items"
+  ),
+  parsons::fail_if(
+    ~{.[1] != "Flashcards"},
+    message = "Votre réponse devrait commencer par les 'FlashCards', qui imposent peu de charge cognitive..."
+  )
+)
+```
+
+Avec cette dernière page se clôt ce tutoriel exemple, destiné à vous apprendre un peu de R, mais surtout à vous faire réfléchir sur l'intérêt d'un tutoriel bien construit. Certes, cela demande un peu de temps d'essayer de se mettre dans la tête de ses élèves, mais cela en vaut la peine !
+
+
+<div data-iframe-height></div>

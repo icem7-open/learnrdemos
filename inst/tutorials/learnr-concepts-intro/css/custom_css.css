@@ -1,0 +1,295 @@
+/* custom icem7 styles for learnr */
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:400,600');
+@import url('https://fonts.googleapis.com/css?family=Ubuntu:400,600');
+
+:root {
+  --color-title: #1e9b9e;
+  --color-bg-topics: #F1A027;
+  --color-bg-topics-l: #F8CA87;
+  --color-bg-bt-base: #1e9b9e;
+  --color-bg-bt-dark: #1B8F8F;
+}
+
+body {
+  background-color: #ffffff;
+  font-size: 15px;
+  margin-top: 6px ;
+  font-family: Open Sans;
+}
+
+body p {
+  line-height: 1.6em;
+}
+
+h1,h2,h3 {
+  font-family: Ubuntu;
+}
+
+h4.date em, h4.author em {
+  font-size: 12px ;
+  font-style: italic !important;
+  color: #999;
+}
+
+h4.date  {
+  margin-top: -6px !important;
+}
+
+h2.tutorialTitle {
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+
+#tutorial-topic:before { 
+  content: url(img/logo-icem7-100.png) ;
+  position: relative; 
+}
+
+.btn:not(.btn-xs), .btn+.btn:not(.btn-xs) {
+    padding: 5px 20px;
+}
+
+.pageContent .topics {
+  overflow-x: hidden;
+}
+
+.ace-tm {
+    background-color: #ffffff;
+    color: black;
+}
+.ace-tm .ace_comment {
+    color: #996666;
+}
+
+.panel, pre {
+    border-radius: 0;
+    border-color: #e0e0e0;
+    background-color: #ffffff;
+}
+
+.panel-default > .panel-heading {
+    color: #555555;
+    background-color: #ffffff;
+    border-color: #dddddd;
+}
+
+.topicsList .topic {
+    line-height: 150%;
+    font-size: 16px;
+    padding-left: 10px;
+    padding: 5px 0 5px 10px ;
+    border-bottom: 1px solid var(--color-bg-topics-l);
+}
+
+.topicsList .topic.current {
+    /*background-color: var(--color-bg-topics);
+    color: #ffffff;
+    border: 0px;*/
+}
+
+.topicsFooter .resetButton {
+    padding-left: 10px;
+    font-size: 0.9em ;
+    font-style: italic;
+    color: var(--color-title);
+    opacity: 1;
+}
+
+code {
+    color: gray;
+    background-color: #ffecdd;
+    font-size: 12px;
+}
+
+a {
+    /*font-family: 'Source Sans Pro', sans-serif;*/
+    color: var(--color-title);
+    text-decoration: none;
+}
+
+.btn, .btn-primary, .btn-success, .btn-info {
+    color: #ffffff;
+    background-color: var(--color-bg-bt-base);
+    background-image: none;
+    border: none;
+    
+    opacity: 0.9;
+    
+    /*font-family: 'Roboto Slab', serif;*/
+}
+
+.btn-primary.disabled, .btn-primary:disabled, .btn-primary.disabled:hover, .btn-primary:disabled:hover, .btn-success.disabled, .btn-success:disabled, .btn-success.disabled:hover, .btn-success:disabled:hover, .btn-info.disabled, .btn-info:disabled, .btn-info.disabled:hover, .btn-info:disabled:hover {
+      background-color: var(--color-bg-bt-base);
+}
+
+.btn-primary:hover, .btn-default:hover, .btn:hover {
+      background-color: var(--color-bg-bt-base) !important;
+      color: white;
+      opacity: 1;
+}
+
+.btn-primary:hover, .btn-primary:focus, .btn-primary:active, .btn-primary:focus:active, .btn-success:hover, .btn-success:focus, .btn-success:active, .btn-success:focus:active, .btn-info:hover, .btn-info:focus, .btn-info:active, .btn-info:focus:active {
+        background-color: var(--color-bg-bt-base) !important;
+}
+
+.btn-default {
+    color: #ffffff;
+    background-color: var(--color-title);
+    background-image: none;
+    border: none;
+    /*font-family: 'Roboto Slab', serif;*/
+}
+
+
+
+h2 {
+  /*color: var(--color-bg-topics);*/
+  /*font-family: 'Roboto Slab', serif;*/
+}
+
+h2.tutorialTitle {
+    color: var(--color-bg-topics);
+}
+
+h3 {
+  color: var(--color-title);
+  /*font-family: 'Roboto Slab', serif;*/
+}
+
+h4 {
+  color: var(--color-title);
+  /*font-family: 'Roboto Slab', serif;*/
+}
+
+h5 {
+    color: darkvar(--color-bg-bt-base);
+    background-color: white;
+    display: inline-block;
+    font-size: 16px;
+}
+
+.ace-tm .ace_string {
+    color: var(--color-title);
+}
+
+.flashcard_div p {
+  line-height: normal;
+  font-size: 13px;
+}
+.flashcard_div h2 {
+  font-size: 1.8em;
+  color: var(--color-bg-bt-dark);
+}
+
+.flash-card-back {
+  border: var(--color-bg-bt-base) 1px solid !important ;
+  background-color: white !important;
+}
+
+.flash-card-back p {
+  color: black;
+}
+
+.flash-card-front {
+  background-color: var(--color-bg-topics-l) !important;
+  border: var(--color-bg-topics) 1px solid !important;
+}
+
+.flash-card-front p {
+  color: black;
+}
+
+/* parsons */
+.rank-list-item.sortable-chosen {
+    background-color: var(--color-bg-topics-l) !important;
+}
+.rank-list-item.sortable-ghost {
+    background-color: var(--color-bg-topics-l) !important;
+}
+.rank-list-item.sortable-ghost.sortable-chosen {
+   background-color: var(--color-bg-topics-l) !important;
+}
+.rank-list-item.sortable-drag {
+    background-color: var(--color-bg-topics-l) !important;
+    border: 1px solid var(--color-bg-topics) !important;
+}
+.rank-list-item.sortable-drag:hover:not(.disabled) {
+   background-color: var(--color-bg-topics-l) !important;
+}
+
+.rank-list-item .rank-list-item-internal:hover:not(.disabled) {
+    border-color: var(--color-bg-topics) !important;
+}
+
+/* adapted styles for all learnr tutos and tutos displayed within an iframe */
+  h3 {
+    margin-bottom: 0.4em;
+  }
+
+  .section img {
+      max-width: 100%;
+      height: auto !important;
+  }
+
+  body.framed {
+    font-size: 16px;
+    color: #000000 ;
+    margin-top: 0px;
+  }
+  
+  .framed .topicsContainer, .framed h2.tutorialTitle {
+    display:none;
+  }
+  
+  .framed .topics {
+    width: 100% ;
+    padding-bottom: 0px;
+  }
+  
+  .framed .topics .section.level2.current {
+    margin-bottom: 0px;
+  }
+  
+  .framed .pageContent.band {
+    padding-left: 0;
+    padding-right: 0;
+  }
+  
+  .framed .panel {
+    margin-bottom: 10px;
+  }
+  
+  .framed button[data-i18n="button.previoustopic"], .framed button[data-i18n="button.nexttopic"],
+    .framed  [data-i18n="button.continue"] {
+    display:none
+  }
+  
+  .framed h2 {
+    font-size: 1.4em;
+    margin: 0;
+  }
+  
+  .framed h3 {
+    font-size: 1.2em;
+  }
+  
+  .flashcard_div {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    margin: -20px 0 20px 0 ;
+  }
+  
+  .flashcard_div div {
+      margin: 10px 0;
+      flex: 0 0 auto;
+  }
+  
+  a.btn-tutorial-copy-solution {
+    display: none;
+  }
+  
+  .framed .pagedtable-wrapper {
+    font-size: 14px;
+  }
+  
