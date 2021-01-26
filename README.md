@@ -9,10 +9,10 @@ Démos pour introduire les concepts de [learnr](https://github.com/rstudio/learn
 
 Ce tutoriel présente :
 
-* 2 exercices de codage
-* 1 QCU (questionnaire à choix unique) 
-* un exemple de FlashCards
-* un problème de Parsons
+* 2 exercices de codage,
+* 1 QCU (questionnaire à choix unique),
+* un exemple de FlashCards,
+* un problème de Parsons.
 
 Les exercices de codage mettent en valeur le système des indices, progressivement révélés, et les mécanismes de vérification apportés par la librairie `gradethis`.
 
@@ -20,8 +20,8 @@ Les exercices de codage mettent en valeur le système des indices, progressiveme
 
 Ce tutoriel présente :
 
-* une illustration de la notion de *setup* et d'indépendance des environnements d'exercice
-* 2 exercices de codage d'un graphique ggplot2
+* une illustration de la notion de *setup* et d'indépendance des environnements d'exercice,
+* 2 exercices de codage d'un graphique ggplot2.
 
 Différentes façons, équivalentes, de construire le graphique sont présentées. Le code de vérification est affiné pour pouvoir valider positivement des rédactions différentes, mais finalement justes.
 
