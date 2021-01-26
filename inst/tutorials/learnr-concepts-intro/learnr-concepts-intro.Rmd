@@ -1,5 +1,5 @@
 ---
-title: "Je code en R !"
+title: "Je code en R\_!"
 description: "Tutoriel de test de codage élémentaire en R"
 author: "Auteur : Éric Mauvière"
 date: "`r paste('Modifié le',format(Sys.time(), '%d %B %Y'))`"
