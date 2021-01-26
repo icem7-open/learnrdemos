@@ -1,0 +1,12 @@
+name: gradethis-df-ggplot
+title: gradethis-df-ggplot
+username:
+account: icem7
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3517109
+bundleId: 4141616
+url: https://icem7.shinyapps.io/gradethis-df-ggplot/
+when: 1611601186.48458
+asMultiple: FALSE
+asStatic: FALSE

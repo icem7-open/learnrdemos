@@ -1,0 +1,12 @@
+name: learnr-concepts-intro
+title: learnr-concepts-intro
+username:
+account: icem7
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 3517091
+bundleId: 4141605
+url: https://icem7.shinyapps.io/learnr-concepts-intro/
+when: 1611600993.0135
+asMultiple: FALSE
+asStatic: FALSE

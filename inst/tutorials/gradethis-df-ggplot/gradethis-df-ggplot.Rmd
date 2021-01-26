@@ -1,5 +1,8 @@
 ---
-title: "Données RSA"
+title: "Je fais un graphique&nbsp;!"
+description: "Tutoriel de test de bonne réalisation d'un graphique"
+author: "Auteur : Éric Mauvière"
+date: "`r paste('Modifié le',format(Sys.time(), '%d %B %Y'))`"
 output: 
   learnr::tutorial:
     includes:
@@ -10,14 +13,14 @@ output:
       fr:
         button:
           runcode: Tester le code
-          submitanswer: Envoyer 
           startover: Réinitialiser
-          hints: Indice ?
+          hints: Indice(s) ?
+          nexttopic: "Sujet suivant »"
+          previoustopic: "« Sujet précédent"
         text:
-          startover: Réinitialiser le tutoriel
+          startover: Réinitialiser ce tutoriel
           areyousure: "Êtes-vous certain de vouloir recommencer ? Vos réponses actuelles seront perdues."
 runtime: shiny_prerendered
-description: "Exercices"
 ---
 
 ```{r setup, include = FALSE}
@@ -34,7 +37,7 @@ rsa_df  <- read_csv(rsa_url)
 
 ## Lecture d'un fichier CSV {data-progressive=T}
 
-Compléter le code suivant en plaçant dans une variable `xlsfile` le chemin vers le fichier xls dézippé.
+Testez le code suivant, vérifiez le bon affichage de la table "rsa" créée :
 
 ```{r ex0, message = F, exercise = TRUE, message = FALSE, exercise.lines = 7, warning = FALSE}
 # Données mensuelles sur les allocataires du RSA
@@ -48,7 +51,7 @@ rsa
 
 ## Test sur la table rsa {data-progressive=T}
 
-Compléter le code suivant en plaçant dans une variable `xlsfile` le chemin vers le fichier xls dézippé.
+Vérifiez à présent si vous pouvez retrouver la table "rsa" créée dans l'exercice précédent :
 
 ```{r ex1, message = F, exercise = TRUE, message = FALSE, exercise.lines = 10}
 # La table "rsa" crée dans l'exercice précédent est-elle acccessible ?
@@ -62,12 +65,12 @@ rsa
 #rsa_df
 ```
 
-## Test d'un graphique avec grade_this_code() {data-progressive=T}
+## Test d'un graphique V1 {data-progressive=T}
 
 Les 4 écritures ci-dessous produisent le même résultat, elles sont donc valides du point de vue de l'apprenant.
 La solution visée correspond à la 1ère écriture. grade_this_code() vérifie le dernier graphique généré. 
 
-Pour lui, la variante 1 est valide. mais grade_this_code() va considérer les variantes 2 et 3 comme différentes, et donc les rejeter comme non conformes à la solution. Activez chaque bloc d'intérêt en désactivant les autres pour le vérifier :
+Pour lui, la variante 1 est valide. Mais grade_this_code() va considérer que les variantes 2 et 3 présentent des éléments en plus ou en moins, il va donc les rejeter comme non-conformes à la solution. Pour le vérifier, je vous invite à activer chacun des blocs en désactivant les autres :
 
 ```{r ex2, message = F, exercise = TRUE, message = FALSE, exercise.lines = 11, warning = FALSE}
 # solution visée : filtrage sur les DROM et courbes d'évolution
@@ -104,12 +107,12 @@ grade_this_code()
 ```
 Note : les messages renvoyés par grade_this_code() ne sont pas - encore - traduisibles. 
 
-## Test d'un graphique avec grade_this() {data-progressive=T}
+## Test d'un graphique V2 {data-progressive=T}
 
-Pour construire un test plus subtil, on va s'attacher aux caractéristiques externes majeures que l'on attend du graphique :
+Pour élaborer une vérification plus subtile, on va s'attacher aux principales caractéristiques externes que l'on attend du graphique :
 
-* conformité de la table de données en entrée : test sur les lignes et les colonnes ;
-* conformité du graphique : bon encodage visuel (geom_line, à la rigueur geom_smooth) et choix des bonnes variables visuelles.
+* conformité de la table de données en entrée : test sur le nombre de lignes et la présence de colonnes-clés ;
+* conformité du graphique : bon choix de représentation (geom_line, à la rigueur geom_smooth) et variables visuelles appropriées.
 
 ```{r ex3, message = F, exercise = TRUE, message = FALSE, exercise.lines = 11, warning = FALSE}
 # solution visée : filtrage sur les DROM et courbes d'évolution
@@ -132,7 +135,6 @@ ggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) +
 #df <- rsa_df %>% filter(dep <= '06')
 #ggplot(data = df) + 
 #      geom_line(mapping = aes(x = mois, y = rsa, color = dep)) 
-
 ```
 
 ```{r ex3-check}
@@ -149,7 +151,7 @@ grade_this({
   
   df <- g$data
   if ( ! ('dep' %in% names(df) )) {
-    fail("Colonne 'dep' absente du jeu de données en entrée du graphique")
+    fail("La colonne 'dep' est absente du jeu de données en entrée du graphique")
   } 
   
   if (!isTRUE( all.equal( rsa_df %>% filter(dep <= '06') %>% count(dep) %>% arrange(dep),
@@ -160,14 +162,14 @@ grade_this({
 
   if (!isTRUE( all.equal( sort(unlist(t)), c( colour = "dep", x = "mois", y = "rsa") ) )) {
     if (!('colour' %in% names(t))) {
-      fail("colour ?")
+      fail("Il semble que la couleur n'ait pas été retenue comme variable visuelle ?")
     }
     
     if (length(t) < 3) {
-      fail("missing aes !")
+      fail("Certaines variables visuelels manquent !")
     }
 
-    fail("bad aes !")
+    fail("Vos variables visuelles ne sont pas encore celles attendues !")
   }
 
   # test de la représentation. geom_line est attendue, mais geom_smooth est admissible

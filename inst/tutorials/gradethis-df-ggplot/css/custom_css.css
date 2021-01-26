@@ -235,6 +235,7 @@ h5 {
     font-size: 16px;
     color: #000000 ;
     margin-top: 0px;
+    margin-bottom: -5px;
   }
   
   .framed .topicsContainer, .framed h2.tutorialTitle {
@@ -246,7 +247,7 @@ h5 {
     padding-bottom: 0px;
   }
   
-  .framed .topics .section.level2.current {
+  .framed .topics .section.level2 {
     margin-bottom: 0px;
   }
   
@@ -259,14 +260,19 @@ h5 {
     margin-bottom: 10px;
   }
   
-  .framed button[data-i18n="button.previoustopic"], .framed button[data-i18n="button.nexttopic"],
+  /*.framed button[data-i18n="button.previoustopic"], .framed button[data-i18n="button.nexttopic"],
     .framed  [data-i18n="button.continue"] {
+    display:none
+  }*/
+  
+  .framed .topicActions {
     display:none
   }
   
   .framed h2 {
     font-size: 1.4em;
     margin: 0;
+    margin-bottom: 6px;
   }
   
   .framed h3 {

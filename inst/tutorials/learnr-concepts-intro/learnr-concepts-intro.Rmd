@@ -1,5 +1,6 @@
 ---
 title: "Je code en R !"
+description: "Tutoriel de test de codage élémentaire en R"
 author: "Auteur : Éric Mauvière"
 date: "`r paste('Modifié le',format(Sys.time(), '%d %B %Y'))`"
 output: 
@@ -35,7 +36,7 @@ tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_le
 ## Introduction {data-progressive=T}
 ### Construction du tutoriels interactifs avec learnr (et gradethis)
 
-<p><img src="css/img/learnr_logo.png" align='right' style='display:inline-block;max-width:200px'>Ce tutoriel a un statut particulier car il s'adresse à des formateurs curieux de (mieux) comprendre comment... **construire des tutoriels interactifs avec R** et au sujet de R (voire d'autres langages).
+<p><img src="css/img/learnr.png" align='right' style='display:inline-block;max-width:200px'>Ce tutoriel a un statut particulier car il s'adresse à des formateurs curieux de (mieux) comprendre comment... **construire des tutoriels interactifs avec R** et au sujet de R (voire d'autres langages).
 
 Ce **double regard, d'apprenant et d'enseignant**, est inhérent à la fabrique d'un support réussi : l'enseignant doit savoir se mettre à la place de l'apprenant. En imaginant à l'avance ses raisonnements, parfois presques justes, parfois mal engagés, il peut mettre à sa disposition d'utiles **"feedbacks"**. Ainsi, loin d'être bloqué voire vite découragé, l'apprenant appréciera de sentir une "voix" secourable le guider avec - autant que faire se peut - **bienveillance** !
 
@@ -45,10 +46,10 @@ L'objectif secondaire, et en réalité  principal si vous êtes formateur R, est
 
 
 ## Reconstitution d'une phrase {data-progressive=T}
-Suivez les instructions suivantes. Vous pouvez sans risque tester l'exécution de votre code, avant de cliquer sur 'Soumettre' pour correction !
+Suivez les instructions suivantes. Vous pouvez sans risque tester l'exécution de votre code, avant de cliquer sur "Soumettre" pour correction !
 
 
-```{r tour0, exercise = TRUE, message = FALSE, exercise.lines = 10}
+```{r ex0, exercise = TRUE, message = FALSE, exercise.lines = 10}
 # Ceci est une ligne de commentaire, elle commence par un #.
 # Vous allez placer dans une variable dénommée "mots" un vecteur 
 #   des quelques mots de la phrase "Je programme avec R !"
@@ -62,13 +63,13 @@ Suivez les instructions suivantes. Vous pouvez sans risque tester l'exécution d
 
 ```
 
-```{r tour0-check}
+```{r ex0-check}
 grade_this({
 
   lobjs <- ls(envir = .envir_result)
 
   if (is.null(.result)) {
-    fail("Vous avez testé la fonction 'Soumettre', et c'est très bien ! Pour le moment, aucun code n'a pu être analysé. Veuillez saisir une 1ère instruction.")
+    fail("Vous avez testé la fonction \"Soumettre\", et c'est très bien ! Pour le moment, aucun code n'a pu être analysé. Veuillez saisir une 1ère instruction.")
   }
   
   if (!is.null(lobjs)) {
@@ -128,48 +129,46 @@ grade_this({
 }, fail_code_feedback = TRUE)
 ```
 
-```{r tour0-hint-1}
+```{r ex0-hint-1}
 # Voici un exemple : dans une variable nommée liste, je place un vecteur de 2 mots :
 liste <- c('bonjour', 'vous')
 ```  
 
-```{r tour0-hint-2}
+```{r ex0-hint-2}
 # Pour assembler les éléments de ma liste, 
 # je peux utiliser la fonction paste.
 # Pour en savoir plus sur les paramètres de paste :
 ?paste
 ```  
 
-```{r tour0-hint-3}
+```{r ex0-hint-3}
 # paste peut s'utiliser de deux façons :
 # 1 - avec des mots séparés en autant d'arguments, 
 # il faudra alors spécifier sep = ' '
 paste('bonjour', 'vous', sep = ' ')
 # => 'bonjour vous'
 ```  
-```{r tour0-hint-4}
+```{r ex0-hint-4}
 # 2 - avec un vecteur, il faudra alors spécifier collapse = ' '
 paste(c('bonjour', 'vous'), collapse = ' ')
 # => 'bonjour vous'
-paste(c('bonjour', 'vous'), collapse = ', ')
-# => 'bonjour, vous'
 ``` 
 
-```{r tour0-hint-5}
+```{r ex0-hint-5}
 # La solution...
 # ... est à portée d'un clic ;
 # si vous n'êtes pas totalement désespéré(e), 
 # donnez-vous encore une chance de trouver seul(e) !
 ``` 
 
-```{r tour0-solution}
+```{r ex0-solution}
 # La solution !
 mots <- c('Je', 'programme', 'avec', 'R', '!')
 paste(mots, collapse = ' ')
 ```  
 Si au test de votre bloc, une erreur en rouge apparait ci-dessus, repérez le n° de ligne mentionné pour corriger ou effacer, et si besoin consultez les indices !
 
-Assurez-vous enfin de répondre par le bouton 'Soumettre' avant de continuer.
+<p style='margin-bottom:0'>Assurez-vous enfin de répondre par le bouton "Soumettre" avant de continuer.</p>
 
 ## Quelle est la bonne fonction ? {data-progressive=T}
 
@@ -188,9 +187,9 @@ question("Pour assembler les éléments d'un vecteur, je peux utiliser dans R :"
 
 ## Reconstitution d'une phrase V2 {data-progressive=T}
 
-Refaites s'il vous plaît le 1er exercice en remplissant les blancs (soulignés). Veillez à ne laisser aucun blanc souligné résiduel. Vous pouvez double-cliquer pour sélectionner tout un "blanc" à remplir. 
+Refaites s'il vous plaît le 1er exercice en remplissant les espaces blancs (soulignés). Veillez à ne laisser aucun caractère souligné résiduel. Vous pouvez double-cliquer pour sélectionner toute une "case" à remplir. 
 
-```{r phrase2, exercise = TRUE, message = FALSE, exercise.lines = 10}
+```{r ex2, exercise = TRUE, message = FALSE, exercise.lines = 10}
 # ceci est une ligne de commentaire, elle commence par un #
 # placez dans une variable dénommée "mots" un vecteur 
 # des quelques mots de la phrase "Je programme avec R !"
@@ -204,7 +203,7 @@ paste(____, collapse = "_")
 
 ```
 
-```{r phrase2-check}
+```{r ex2-check}
 grade_this({
 
   lobjs <- ls(envir = .envir_result)
@@ -269,22 +268,17 @@ grade_this({
   fail("Désolé, ce n'est pas encore tout à fait ça. Vous n'êtes certainement pas loin du but !")
 }, fail_code_feedback = TRUE)
 ```
-```{r phrase2-hint-2}
-# dans une variable nommée liste je place un vecteur de 2 mots
-liste <- c('bonjour', 'vous')
-paste()
-```  
 
-```{r phrase2-hint-1}
+
+```{r ex2-hint-1}
 # dans une variable nommée liste je place un vecteur de 2 mots
 liste <- c('bonjour', 'vous')
 ```  
 
-
-```{r phrase2-solution}
-# solution de l'exercice
+```{r ex2-solution}
+# La solution !
 mots <- c('Je', 'programme', 'avec', 'R', '!')
-paste(mots)
+paste(mots, collapse = ' ')
 ```  
 
 ## Retournons les cartes ! {data-progressive=T}
@@ -356,6 +350,5 @@ question_parsons(
 ```
 
 Avec cette dernière page se clôt ce tutoriel exemple, destiné à vous apprendre un peu de R, mais surtout à vous faire réfléchir sur l'intérêt d'un tutoriel bien construit. Certes, cela demande un peu de temps d'essayer de se mettre dans la tête de ses élèves, mais cela en vaut la peine !
-
 
 <div data-iframe-height></div>
