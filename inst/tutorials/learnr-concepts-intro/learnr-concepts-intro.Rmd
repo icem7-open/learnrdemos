@@ -310,11 +310,11 @@ Cet exercice final s'adresse au formateur considérant l'intérêt des outils ex
 
 Je vous invite à classer par ordre de difficulté pédagogique (ou charge cognitive) croissante ces différentes "widgets".
 
-Un ["problème de Parson"](https://www.researchgate.net/publication/262160581_Parson%27s_programming_puzzles_A_fun_and_effective_learning_tool_for_first_programming_courses) consiste stricto sensu à proposer à l'apprenant d'ordonner des lignes de code qui lui sont présentées dans le désordre. 
+Un ["problème de Parsons"](https://www.researchgate.net/publication/262160581_Parson%27s_programming_puzzles_A_fun_and_effective_learning_tool_for_first_programming_courses) consiste stricto sensu à proposer à l'apprenant d'ordonner des lignes de code qui lui sont présentées dans le désordre. 
 
 Je reprends cette idée en en élargissant le champ (lignes de code => concepts), pour ce dernier exercice, qui n'a donc pas de solution 'mathématique' incontestable. Mais la recherche en pédagogie permet de dégager une hiérachie 'naturelle'.
 
-Le widget ci-dessous est donc un genre de problème de Parson, appliqué à la pédagogie elle-même !
+Le widget ci-dessous est donc un genre de problème de Parsons, appliqué à la pédagogie elle-même !
 ```{r qu_parsons, echo = FALSE}
 question_parsons(
   initial = c(
