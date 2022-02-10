@@ -1,6 +1,6 @@
 ---
 title: "Je fais un graphique\_!"
-description: "Tutoriel de test de bonne réalisation d'un graphique !"
+description: "Tutoriel de test de bonne réalisation d'un graphique"
 author: "Auteur : Éric Mauvière"
 date: "`r paste('Modifié le',format(Sys.time(), '%d %B %Y'))`"
 output: 
