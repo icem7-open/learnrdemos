@@ -31,7 +31,7 @@ library(testthat)
 
 tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')
 knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5)
-rsa_url <- "https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite/20201224-095107/tbl-rsa.csv"
+rsa_url <- "https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/20211215-094243/tbl-rsa.csv"
 rsa_df  <- read_csv(rsa_url) 
 ```
 
@@ -41,8 +41,8 @@ Testez le code suivant, vérifiez le bon affichage de la table "rsa" créée :
 
 ```{r ex0, message = F, exercise = TRUE, message = FALSE, exercise.lines = 7, warning = FALSE}
 # Données mensuelles sur les allocataires du RSA
-baseurl <- "https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite/"
-rsaurl  <- str_c(baseurl, "20201224-095107/tbl-rsa.csv")
+baseurl <- "https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/"
+rsaurl  <- str_c(baseurl, "20211215-094243/tbl-rsa.csv")
 
 # Le code suivant constitue une table nommée rsa
 rsa <- read_csv(rsaurl) 
