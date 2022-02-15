@@ -20,6 +20,8 @@ output:
         text:
           startover: Réinitialiser ce tutoriel
           areyousure: "Êtes-vous certain de vouloir recommencer ? Vos réponses actuelles seront perdues."
+          exercisecontainsblank: "Cet exercise comporte {{count}} zones de blancs soulignés."
+          pleasereplaceblank: "SVP remplacez-les avec du code valide. Vous pouvez double-cliquer dedans pour les éditer plus facilement."
 runtime: shiny_prerendered
 ---
 
@@ -30,9 +32,15 @@ library(parsons)
 library(tidyverse)
 
 knitr::opts_chunk$set(echo = FALSE)
-tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')
+tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R', exercise.blanks = T)
 ```
-
+```{r setup-phrases, echo = FALSE}
+random_phrases_add(
+  language = "fr",
+  praise = c("Génial", "You're awesome!"),
+  encouragement = c("Je crois en toi.", "Yes we can!")
+)
+```
 ## Introduction {data-progressive=T}
 ### Construction du tutoriels interactifs avec learnr (et gradethis)
 
@@ -193,7 +201,7 @@ Refaites s'il vous plaît le 1er exercice en remplissant les espaces blancs (sou
 # ceci est une ligne de commentaire, elle commence par un #
 # placez dans une variable dénommée "mots" un vecteur 
 # des quelques mots de la phrase "Je programme avec R !"
-# remplacez les ___ dans la ligne suivante (ligne 5)
+# remplacez les blancs soulignés dans la ligne suivante (ligne 5)
 ____ <- c('Je', '_________', 'avec', '_', '_')
 
 # tapez ensuite l'instruction qui va remettre bout à bout tous ces mots 

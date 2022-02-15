@@ -5,8 +5,9 @@ account: icem7
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3517091
-bundleId: 4146226
+bundleId: 5565314
 url: https://icem7.shinyapps.io/learnr-concepts-intro/
-when: 1611686784.12131
+when: 1644508404.83625
+lastSyncTime: 1644508404.83625
 asMultiple: FALSE
 asStatic: FALSE

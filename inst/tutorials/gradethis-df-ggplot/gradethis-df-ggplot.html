@@ -19,7 +19,7 @@
 
 <!-- header-includes START -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/iframe-resizer/3.5.16/iframeResizer.contentWindow.min.js" type="text/javascript"></script>
-
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script type="text/javascript">
 const urlParams = new URLSearchParams(window.location.search);
 
@@ -32,7 +32,10 @@ if (urlParams.has('t')) {
 
 // Once page is loaded, override and disable popover "scroll into view"
   $(document).ready(function() {
-    window.tutorial.scrollIntoView = function() {}
+    //window.tutorial.scrollIntoView = function() {}
+  if (window.top != window.self && window.location.hostname.indexOf('shinyapps') > 0) {
+    document.body.classList.add("framed");
+  }
   })
 
 // Add padding to LearnR body when popover shown
@@ -55,9 +58,6 @@ if (urlParams.has('t')) {
     }
   });
   
-  if (window.top != window.self && window.location.hostname.indexOf('shinyapps') > 0) {
-    document.body.classList.add("framed");
-  }
 </script>
 <!-- header-includes END -->
 <!-- HEAD_CONTENT -->
@@ -168,7 +168,7 @@ rsa</code></pre>
 <h2>Test sur la table rsa</h2>
 <p>Vérifiez à présent si vous pouvez retrouver la table “rsa” créée dans l’exercice précédent :</p>
 <div class="tutorial-exercise" data-label="ex1" data-completion="1" data-diagnostics="1" data-startover="1" data-lines="10">
-<pre class="text"><code># La table &quot;rsa&quot; crée dans l&#39;exercice précédent est-elle acccessible ?
+<pre class="text"><code># La table &quot;rsa&quot; créée dans l&#39;exercice précédent est-elle acccessible ?
 rsa
 
 # Et non, elle a disparu avec l&#39;environnement de l&#39;exercice précédent !
@@ -254,10 +254,10 @@ library(learnr)
 library(gradethis)
 library(testthat)
 
-tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')
+tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R', exercise.blanks = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5)
 rsa_url <- "https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/20211215-094243/tbl-rsa.csv"
-rsa_df  <- read_csv(rsa_url) 
+rsa_df  <- read_csv("data/tbl-rsa.csv")  #read_csv(rsa_url) 
 </script>
  
 <script type="application/shiny-prerendered" data-context="server">
@@ -288,22 +288,22 @@ output$`tutorial-exercise-ex0-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(gradethis)", "library(testthat)", 
-"", "tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')", 
+"", "tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R', exercise.blanks = FALSE)", 
 "knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5)", "rsa_url <- \"https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/20211215-094243/tbl-rsa.csv\"", 
-"rsa_df  <- read_csv(rsa_url) "), chunk_opts = list(label = "setup", 
-    include = FALSE)), setup = NULL, chunks = list(list(label = "ex0", 
-    code = "# Données mensuelles sur les allocataires du RSA\nbaseurl <- \"https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/\"\nrsaurl  <- str_c(baseurl, \"20211215-094243/tbl-rsa.csv\")\n\n# Le code suivant constitue une table nommée rsa\nrsa <- read_csv(rsaurl) \nrsa", 
-    opts = list(label = "\"ex0\"", message = "F", exercise = "TRUE", 
-        message = "FALSE", exercise.lines = "7", warning = "FALSE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = NULL, 
-    solution = NULL, options = list(eval = FALSE, echo = TRUE, 
-        results = "markup", tidy = FALSE, tidy.opts = NULL, collapse = FALSE, 
-        prompt = FALSE, comment = NA, highlight = FALSE, size = "normalsize", 
-        background = "#F7F7F7", strip.white = TRUE, cache = 0, 
-        cache.path = "gradethis-df-ggplot_cache/html/", cache.vars = NULL, 
-        cache.lazy = TRUE, dependson = NULL, autodep = FALSE, 
-        cache.rebuild = FALSE, fig.keep = "high", fig.show = "asis", 
-        fig.align = "default", fig.path = "gradethis-df-ggplot_files/figure-html/", 
+"rsa_df  <- read_csv(\"data/tbl-rsa.csv\")  #read_csv(rsa_url) "
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "ex0", code = "# Données mensuelles sur les allocataires du RSA\nbaseurl <- \"https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/\"\nrsaurl  <- str_c(baseurl, \"20211215-094243/tbl-rsa.csv\")\n\n# Le code suivant constitue une table nommée rsa\nrsa <- read_csv(rsaurl) \nrsa", 
+        opts = list(label = "\"ex0\"", message = "F", exercise = "TRUE", 
+            message = "FALSE", exercise.lines = "7", warning = "FALSE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = NULL, solution = NULL, options = list(eval = FALSE, 
+        echo = TRUE, results = "markup", tidy = FALSE, tidy.opts = NULL, 
+        collapse = FALSE, prompt = FALSE, comment = NA, highlight = FALSE, 
+        size = "normalsize", background = "#F7F7F7", strip.white = TRUE, 
+        cache = 0, cache.path = "gradethis-df-ggplot_cache/html/", 
+        cache.vars = NULL, cache.lazy = TRUE, dependson = NULL, 
+        autodep = FALSE, cache.rebuild = FALSE, fig.keep = "high", 
+        fig.show = "asis", fig.align = "default", fig.path = "gradethis-df-ggplot_files/figure-html/", 
         dev = "png", dev.args = NULL, dpi = 192, fig.ext = "png", 
         fig.width = 6.5, fig.height = 2.5, fig.env = "figure", 
         fig.cap = NULL, fig.scap = NULL, fig.lp = "fig:", fig.subcap = NULL, 
@@ -314,8 +314,8 @@ learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (...) \n{\n    lifecycle::deprecate_soft(\"0.2.2\", \"grade_learnr()\", \"gradethis_exercise_checker()\")\n    gradethis_exercise_checker(...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
-        exercise.cap = "R", label = "ex0", exercise = TRUE, exercise.lines = 7, 
-        code = c("# Données mensuelles sur les allocataires du RSA", 
+        exercise.cap = "R", exercise.blanks = FALSE, label = "ex0", 
+        exercise = TRUE, exercise.lines = 7, code = c("# Données mensuelles sur les allocataires du RSA", 
         "baseurl <- \"https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/\"", 
         "rsaurl  <- str_c(baseurl, \"20211215-094243/tbl-rsa.csv\")", 
         "", "# Le code suivant constitue une table nommée rsa", 
@@ -334,13 +334,13 @@ output$`tutorial-exercise-ex1-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(gradethis)", "library(testthat)", 
-"", "tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')", 
+"", "tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R', exercise.blanks = FALSE)", 
 "knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5)", "rsa_url <- \"https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/20211215-094243/tbl-rsa.csv\"", 
-"rsa_df  <- read_csv(rsa_url) "), chunk_opts = list(label = "setup", 
-    include = FALSE)), setup = NULL, chunks = list(list(label = "ex1", 
-    code = "# La table \"rsa\" crée dans l'exercice précédent est-elle acccessible ?\nrsa\n\n# Et non, elle a disparu avec l'environnement de l'exercice précédent !\n# En revanche la table 'rsa_df' préparée dans le \"setup\" du tutoriel\n# est accessible pour tous les exercices ;\n# pour le vérifier, commentez la ligne 2, avec #\n# et décommentez la ligne suivante :\n#rsa_df", 
-    opts = list(label = "\"ex1\"", message = "F", exercise = "TRUE", 
-        message = "FALSE", exercise.lines = "10"), engine = "r")), 
+"rsa_df  <- read_csv(\"data/tbl-rsa.csv\")  #read_csv(rsa_url) "
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "ex1", code = "# La table \"rsa\" créée dans l'exercice précédent est-elle acccessible ?\nrsa\n\n# Et non, elle a disparu avec l'environnement de l'exercice précédent !\n# En revanche la table 'rsa_df' préparée dans le \"setup\" du tutoriel\n# est accessible pour tous les exercices ;\n# pour le vérifier, commentez la ligne 2, avec #\n# et décommentez la ligne suivante :\n#rsa_df", 
+        opts = list(label = "\"ex1\"", message = "F", exercise = "TRUE", 
+            message = "FALSE", exercise.lines = "10"), engine = "r")), 
     code_check = NULL, error_check = NULL, check = NULL, solution = NULL, 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
@@ -360,8 +360,8 @@ learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (...) \n{\n    lifecycle::deprecate_soft(\"0.2.2\", \"grade_learnr()\", \"gradethis_exercise_checker()\")\n    gradethis_exercise_checker(...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
-        exercise.cap = "R", label = "ex1", exercise = TRUE, exercise.lines = 10, 
-        code = c("# La table \"rsa\" crée dans l'exercice précédent est-elle acccessible ?", 
+        exercise.cap = "R", exercise.blanks = FALSE, label = "ex1", 
+        exercise = TRUE, exercise.lines = 10, code = c("# La table \"rsa\" créée dans l'exercice précédent est-elle acccessible ?", 
         "rsa", "", "# Et non, elle a disparu avec l'environnement de l'exercice précédent !", 
         "# En revanche la table 'rsa_df' préparée dans le \"setup\" du tutoriel", 
         "# est accessible pour tous les exercices ;", "# pour le vérifier, commentez la ligne 2, avec #", 
@@ -380,17 +380,18 @@ output$`tutorial-exercise-ex2-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(gradethis)", "library(testthat)", 
-"", "tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')", 
+"", "tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R', exercise.blanks = FALSE)", 
 "knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5)", "rsa_url <- \"https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/20211215-094243/tbl-rsa.csv\"", 
-"rsa_df  <- read_csv(rsa_url) "), chunk_opts = list(label = "setup", 
-    include = FALSE)), setup = NULL, chunks = list(list(label = "ex2", 
-    code = "# solution visée : filtrage sur les DROM et courbes d'évolution\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + \n#      geom_line() \n\n# variante 1 : saut de ligne et paramètres aes dans un ordre différent\ndf <- rsa_df %>% \n  filter(dep <= '06')\nggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) + \n      geom_line() \n\n# variante 2 : colour est écrit color (les 2 écritures sont permises)\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df, mapping = aes(x = mois, y = rsa, color = dep)) + \n#      geom_line() \n\n# variante 3\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df) + \n#      geom_line(mapping = aes(x = mois, y = rsa, color = dep)) \n", 
-    opts = list(label = "\"ex2\"", message = "F", exercise = "TRUE", 
-        message = "FALSE", exercise.lines = "11", warning = "FALSE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = structure("grade_this_code()", chunk_opts = list(
-    label = "ex2-check")), solution = structure(c("df <- rsa_df %>% filter(dep <= '06')", 
-"ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + ", 
-"      geom_line() "), chunk_opts = list(label = "ex2-solution")), 
+"rsa_df  <- read_csv(\"data/tbl-rsa.csv\")  #read_csv(rsa_url) "
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "ex2", code = "# solution visée : filtrage sur les DROM et courbes d'évolution\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + \n#      geom_line() \n\n# variante 1 : saut de ligne et paramètres aes dans un ordre différent\ndf <- rsa_df %>% \n  filter(dep <= '06')\nggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) + \n      geom_line() \n\n# variante 2 : colour est écrit color (les 2 écritures sont permises)\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df, mapping = aes(x = mois, y = rsa, color = dep)) + \n#      geom_line() \n\n# variante 3\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df) + \n#      geom_line(mapping = aes(x = mois, y = rsa, color = dep)) \n", 
+        opts = list(label = "\"ex2\"", message = "F", exercise = "TRUE", 
+            message = "FALSE", exercise.lines = "11", warning = "FALSE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = structure("grade_this_code()", chunk_opts = list(
+        label = "ex2-check")), solution = structure(c("df <- rsa_df %>% filter(dep <= '06')", 
+    "ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + ", 
+    "      geom_line() "), chunk_opts = list(label = "ex2-solution")), 
     options = list(eval = FALSE, echo = TRUE, results = "markup", 
         tidy = FALSE, tidy.opts = NULL, collapse = FALSE, prompt = FALSE, 
         comment = NA, highlight = FALSE, size = "normalsize", 
@@ -409,8 +410,8 @@ learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (...) \n{\n    lifecycle::deprecate_soft(\"0.2.2\", \"grade_learnr()\", \"gradethis_exercise_checker()\")\n    gradethis_exercise_checker(...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
-        exercise.cap = "R", label = "ex2", exercise = TRUE, exercise.lines = 11, 
-        code = c("# solution visée : filtrage sur les DROM et courbes d'évolution", 
+        exercise.cap = "R", exercise.blanks = FALSE, label = "ex2", 
+        exercise = TRUE, exercise.lines = 11, code = c("# solution visée : filtrage sur les DROM et courbes d'évolution", 
         "#df <- rsa_df %>% filter(dep <= '06')", "#ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + ", 
         "#      geom_line() ", "", "# variante 1 : saut de ligne et paramètres aes dans un ordre différent", 
         "df <- rsa_df %>% ", "  filter(dep <= '06')", "ggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) + ", 
@@ -432,32 +433,33 @@ output$`tutorial-exercise-ex3-output` <- renderUI({
 <script type="application/shiny-prerendered" data-context="server">
 learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library(tidyverse)", 
 "library(learnr)", "library(gradethis)", "library(testthat)", 
-"", "tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')", 
+"", "tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R', exercise.blanks = FALSE)", 
 "knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5)", "rsa_url <- \"https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/20211215-094243/tbl-rsa.csv\"", 
-"rsa_df  <- read_csv(rsa_url) "), chunk_opts = list(label = "setup", 
-    include = FALSE)), setup = NULL, chunks = list(list(label = "ex3", 
-    code = "# solution visée : filtrage sur les DROM et courbes d'évolution\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + \n#      geom_line() \n\n# variante 1 : saut de ligne et paramètres aes dans un ordre différent\ndf <- rsa_df %>% \n  filter(dep <= '06')\nggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) + \n      geom_line() \n\n# variante 2 : colour est écrit color (les 2 écritures sont permises)\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df, mapping = aes(x = mois, y = rsa, color = dep)) + \n#      geom_line() \n\n# variante 3\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df) + \n#      geom_line(mapping = aes(x = mois, y = rsa, color = dep)) ", 
-    opts = list(label = "\"ex3\"", message = "F", exercise = "TRUE", 
-        message = "FALSE", exercise.lines = "11", warning = "FALSE"), 
-    engine = "r")), code_check = NULL, error_check = NULL, check = structure(c("grade_this({", 
-"", "  if (is.null(.result)) {", "    fail(\"Vous avez testé la fonction 'Soumettre', et c'est très bien ! Pour le moment, aucun code n'a pu être analysé. Veuillez saisir une 1ère instruction.\")", 
-"  }", "  ", "  if (\"ggplot\" %in% class(.result) == FALSE) {", 
-"    fail(\"Votre dernière instruction ne produit pas un graphique ggplot2\")", 
-"  }", "  g <- .result", "  ", "  df <- g$data", "  if ( ! ('dep' %in% names(df) )) {", 
-"    fail(\"La colonne 'dep' est absente du jeu de données en entrée du graphique\")", 
-"  } ", "  ", "  if (!isTRUE( all.equal( rsa_df %>% filter(dep <= '06') %>% count(dep) %>% arrange(dep),", 
-"                          df %>% count(dep) %>% arrange(dep)))) {", 
-"  }", "", "  t <- c(map( g$mapping, all.vars), map(g$layers[[1]]$mapping, all.vars) ) ", 
-"", "  if (!isTRUE( all.equal( sort(unlist(t)), c( colour = \"dep\", x = \"mois\", y = \"rsa\") ) )) {", 
-"    if (!('colour' %in% names(t))) {", "      fail(\"Il semble que la couleur n'ait pas été retenue comme variable visuelle ?\")", 
-"    }", "    ", "    if (length(t) < 3) {", "      fail(\"Certaines variables visuelels manquent !\")", 
-"    }", "", "    fail(\"Vos variables visuelles ne sont pas encore celles attendues !\")", 
-"  }", "", "  # test de la représentation. geom_line est attendue, mais geom_smooth est admissible", 
-"  classLayer1 <- class(g$layers[[1]]$geom)[1]", "  if ( classLayer1 != 'GeomLine') {", 
-"    if (classLayer1 == 'GeomSmooth') {", "      pass(str_glue(\"Excellent ! Toutefois, votre graphique présente une couche de type '{classLayer1}', alors que l'on attendait simplement une 'GeomLine'\") )", 
-"    }", "    fail(str_glue(\"Votre graphique présente une couche de type '{classLayer1}', alors que l'on attend une 'GeomLine'\") )", 
-"  } ", "  ", "  pass(\"Bravo ! Votre graphique présente bien les 6 courbes d'évolution attendues.\")", 
-"", "}, fail_code_feedback = TRUE)"), chunk_opts = list(label = "ex3-check")), 
+"rsa_df  <- read_csv(\"data/tbl-rsa.csv\")  #read_csv(rsa_url) "
+), chunk_opts = list(label = "setup", include = FALSE)), setup = NULL, 
+    chunks = list(list(label = "ex3", code = "# solution visée : filtrage sur les DROM et courbes d'évolution\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + \n#      geom_line() \n\n# variante 1 : saut de ligne et paramètres aes dans un ordre différent\ndf <- rsa_df %>% \n  filter(dep <= '06')\nggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) + \n      geom_line() \n\n# variante 2 : colour est écrit color (les 2 écritures sont permises)\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df, mapping = aes(x = mois, y = rsa, color = dep)) + \n#      geom_line() \n\n# variante 3\n#df <- rsa_df %>% filter(dep <= '06')\n#ggplot(data = df) + \n#      geom_line(mapping = aes(x = mois, y = rsa, color = dep)) ", 
+        opts = list(label = "\"ex3\"", message = "F", exercise = "TRUE", 
+            message = "FALSE", exercise.lines = "11", warning = "FALSE"), 
+        engine = "r")), code_check = NULL, error_check = NULL, 
+    check = structure(c("grade_this({", "", "  if (is.null(.result)) {", 
+    "    fail(\"Vous avez testé la fonction 'Soumettre', et c'est très bien ! Pour le moment, aucun code n'a pu être analysé. Veuillez saisir une 1ère instruction.\")", 
+    "  }", "  ", "  if (\"ggplot\" %in% class(.result) == FALSE) {", 
+    "    fail(\"Votre dernière instruction ne produit pas un graphique ggplot2\")", 
+    "  }", "  g <- .result", "  ", "  df <- g$data", "  if ( ! ('dep' %in% names(df) )) {", 
+    "    fail(\"La colonne 'dep' est absente du jeu de données en entrée du graphique\")", 
+    "  } ", "  ", "  if (!isTRUE( all.equal( rsa_df %>% filter(dep <= '06') %>% count(dep) %>% arrange(dep),", 
+    "                          df %>% count(dep) %>% arrange(dep)))) {", 
+    "  }", "", "  t <- c(map( g$mapping, all.vars), map(g$layers[[1]]$mapping, all.vars) ) ", 
+    "", "  if (!isTRUE( all.equal( sort(unlist(t)), c( colour = \"dep\", x = \"mois\", y = \"rsa\") ) )) {", 
+    "    if (!('colour' %in% names(t))) {", "      fail(\"Il semble que la couleur n'ait pas été retenue comme variable visuelle ?\")", 
+    "    }", "    ", "    if (length(t) < 3) {", "      fail(\"Certaines variables visuelels manquent !\")", 
+    "    }", "", "    fail(\"Vos variables visuelles ne sont pas encore celles attendues !\")", 
+    "  }", "", "  # test de la représentation. geom_line est attendue, mais geom_smooth est admissible", 
+    "  classLayer1 <- class(g$layers[[1]]$geom)[1]", "  if ( classLayer1 != 'GeomLine') {", 
+    "    if (classLayer1 == 'GeomSmooth') {", "      pass(str_glue(\"Excellent ! Toutefois, votre graphique présente une couche de type '{classLayer1}', alors que l'on attendait simplement une 'GeomLine'\") )", 
+    "    }", "    fail(str_glue(\"Votre graphique présente une couche de type '{classLayer1}', alors que l'on attend une 'GeomLine'\") )", 
+    "  } ", "  ", "  pass(\"Bravo ! Votre graphique présente bien les 6 courbes d'évolution attendues.\")", 
+    "", "}, fail_code_feedback = TRUE)"), chunk_opts = list(label = "ex3-check")), 
     solution = NULL, options = list(eval = FALSE, echo = TRUE, 
         results = "markup", tidy = FALSE, tidy.opts = NULL, collapse = FALSE, 
         prompt = FALSE, comment = NA, highlight = FALSE, size = "normalsize", 
@@ -476,8 +478,8 @@ learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library
         engine = "r", split = FALSE, include = TRUE, purl = TRUE, 
         max.print = 1000, exercise.timelimit = 60, exercise.checker = "function (...) \n{\n    lifecycle::deprecate_soft(\"0.2.2\", \"grade_learnr()\", \"gradethis_exercise_checker()\")\n    gradethis_exercise_checker(...)\n}", 
         exercise.error.check.code = "gradethis_error_checker()", 
-        exercise.cap = "R", label = "ex3", exercise = TRUE, exercise.lines = 11, 
-        code = c("# solution visée : filtrage sur les DROM et courbes d'évolution", 
+        exercise.cap = "R", exercise.blanks = FALSE, label = "ex3", 
+        exercise = TRUE, exercise.lines = 11, code = c("# solution visée : filtrage sur les DROM et courbes d'évolution", 
         "#df <- rsa_df %>% filter(dep <= '06')", "#ggplot(data = df, mapping = aes(x = mois, y = rsa, colour = dep)) + ", 
         "#      geom_line() ", "", "# variante 1 : saut de ligne et paramètres aes dans un ordre différent", 
         "df <- rsa_df %>% ", "  filter(dep <= '06')", "ggplot(data = df, mapping = aes(colour = dep, x = mois, y = rsa)) + ", 
@@ -495,7 +497,7 @@ learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library
 <!--/html_preserve-->
 <!--html_preserve-->
 <script type="application/shiny-prerendered" data-context="execution_dependencies">
-{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89]}},"value":[{"type":"character","attributes":{},"value":["assertthat","backports","base","bit","bit64","broom","bslib","cellranger","checkmate","cli","colorspace","compiler","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","evaluate","fansi","fastmap","forcats","fs","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","haven","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","modelr","munsell","parallel","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","sass","scales","shiny","stats","stringi","stringr","testthat","tibble","tidyr","tidyselect","tidyverse","tools","tzdb","utf8","utils","vctrs","vroom","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.2.1","1.4.0","4.1.2","4.0.4","4.0.5","0.7.10","0.3.1","1.1.0","2.0.0","3.1.0","2.0-2","4.1.2","1.4.2","4.3.2","4.1.2","1.1.1","2.1.1","0.6.29","1.0.7","0.3.2","0.14","0.5.0","1.1.0","0.5.1","1.5.2","0.1.1","3.3.5","1.5.1","0.2.5.9000","4.1.2","4.1.2","4.1.2","0.3.0","2.4.3","1.1.1","0.5.2","1.5.4","1.6.3","1.4.2","0.1.4","1.7.2","1.36","1.3.0","0.10.1.9019","1.0.1","1.8.0","2.0.1","1.1","4.1.2","0.12","0.1.8","0.5.0","4.1.2","1.6.4","2.0.3","1.2.0.1","0.3.4","2.5.1","1.0.7","2.1.1","1.3.1","2.0.1","0.4.12","2.11","2.0.2","0.13","1.0.2","0.4.0","1.1.1","1.7.1","4.1.2","1.7.6","1.4.0","3.1.1","3.1.6","1.1.4","1.1.1","1.3.1","4.1.2","0.2.0","1.2.2","4.1.2","0.3.8","1.5.7","2.4.3","0.28","1.3.3","1.8-4","2.2.1"]}]}]}
+{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages"]}},"value":[{"type":"list","attributes":{"names":{"type":"character","attributes":{},"value":["packages","version"]},"class":{"type":"character","attributes":{},"value":["data.frame"]},"row.names":{"type":"integer","attributes":{},"value":[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40,41,42,43,44,45,46,47,48,49,50,51,52,53,54,55,56,57,58,59,60,61,62,63,64,65,66,67,68,69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,88,89,90]}},"value":[{"type":"character","attributes":{},"value":["assertthat","backports","base","bit","bit64","brio","broom","bslib","cellranger","checkmate","cli","colorspace","compiler","crayon","curl","datasets","DBI","dbplyr","digest","dplyr","ellipsis","evaluate","fansi","fastmap","forcats","fs","generics","ggplot2","glue","gradethis","graphics","grDevices","grid","gtable","haven","hms","htmltools","htmlwidgets","httpuv","httr","jquerylib","jsonlite","knitr","later","learnr","lifecycle","lubridate","magrittr","markdown","methods","mime","modelr","munsell","parallel","pillar","pkgconfig","promises","purrr","R6","Rcpp","readr","readxl","reprex","rlang","rmarkdown","rprojroot","rstudioapi","rvest","sass","scales","shiny","stats","stringi","stringr","testthat","tibble","tidyr","tidyselect","tidyverse","tools","tzdb","utf8","utils","vctrs","vroom","withr","xfun","xml2","xtable","yaml"]},{"type":"character","attributes":{},"value":["0.2.1","1.4.1","4.1.2","4.0.4","4.0.5","1.1.3","0.7.12","0.3.1","1.1.0","2.0.0","3.1.1","2.0-2","4.1.2","1.4.2","4.3.2","4.1.2","1.1.2","2.1.1","0.6.29","1.0.7","0.3.2","0.14","0.5.0","1.1.0","0.5.1","1.5.2","0.1.2","3.3.5","1.5.1","0.2.5.9000","4.1.2","4.1.2","4.1.2","0.3.0","2.4.3","1.1.1","0.5.2","1.5.4","1.6.5","1.4.2","0.1.4","1.7.3","1.37","1.3.0","0.10.1.9019","1.0.1","1.8.0","2.0.1","1.1","4.1.2","0.12","0.1.8","0.5.0","4.1.2","1.7.0","2.0.3","1.2.0.1","0.3.4","2.5.1","1.0.8","2.1.2","1.3.1","2.0.1","0.4.12","2.11","2.0.2","0.13","1.0.2","0.4.0","1.1.1","1.7.1","4.1.2","1.7.6","1.4.0","3.1.2","3.1.6","1.2.0","1.1.1","1.3.1","4.1.2","0.2.0","1.2.2","4.1.2","0.3.8","1.5.7","2.4.3","0.29","1.3.3","1.8-4","2.2.2"]}]}]}
 </script>
 <!--/html_preserve-->
 </div>
@@ -511,7 +513,7 @@ learnr:::store_exercise_cache(structure(list(global_setup = structure(c("library
 <div id="doc-metadata">
 <h2 class="title toc-ignore" style="display:none;">Je fais un graphique !</h2>
 <h4 class="author"><em>Auteur : Éric Mauvière</em></h4>
-<h4 class="date"><em>Modifié le 10 février 2022</em></h4>
+<h4 class="date"><em>Modifié le 11 février 2022</em></h4>
 </div>
 <!-- end doc-metadata -->
 

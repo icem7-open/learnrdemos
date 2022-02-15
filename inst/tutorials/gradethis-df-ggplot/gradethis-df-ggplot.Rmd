@@ -29,10 +29,10 @@ library(learnr)
 library(gradethis)
 library(testthat)
 
-tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R')
+tutorial_options(exercise.timelimit = 60, exercise.checker = gradethis::grade_learnr, exercise.cap = 'R', exercise.blanks = FALSE)
 knitr::opts_chunk$set(echo = FALSE, fig.height = 2.5)
 rsa_url <- "https://static.data.gouv.fr/resources/suivi-mensuel-des-prestations-de-solidarite-pendant-la-crise-sanitaire-source-drees/20211215-094243/tbl-rsa.csv"
-rsa_df  <- read_csv(rsa_url) 
+rsa_df  <- read_csv("data/tbl-rsa.csv")  #read_csv(rsa_url) 
 ```
 
 ## Lecture d'un fichier CSV {data-progressive=T}
@@ -54,7 +54,7 @@ rsa
 Vérifiez à présent si vous pouvez retrouver la table "rsa" créée dans l'exercice précédent :
 
 ```{r ex1, message = F, exercise = TRUE, message = FALSE, exercise.lines = 10}
-# La table "rsa" crée dans l'exercice précédent est-elle acccessible ?
+# La table "rsa" créée dans l'exercice précédent est-elle acccessible ?
 rsa
 
 # Et non, elle a disparu avec l'environnement de l'exercice précédent !
